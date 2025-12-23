@@ -6,6 +6,7 @@ import base64
 from io import BytesIO
 import torch
 from diffusers import FluxPipeline
+import os
 
 
 class PromptInput(BaseModel):
@@ -36,10 +37,23 @@ class FluxSchnell:
     """
 
     def setup(self):
-        """Initialize the Flux-Schnell model. Called once on app startup."""
+        """Initialize the Flux-Schnell model. Called once on app startup.
+
+        Requires HF_TOKEN environment variable to be set for accessing the gated model.
+        Set it with: export HF_TOKEN=hf_xxxxx
+        """
+        # Get Hugging Face token from environment variable
+        hf_token = os.getenv("HF_TOKEN") or os.getenv("HUGGING_FACE_HUB_TOKEN")
+        if not hf_token:
+            raise ValueError(
+                "HF_TOKEN environment variable is required to access the gated model. "
+                "Set it with: export HF_TOKEN=hf_xxxxx"
+            )
+
         self.pipe = FluxPipeline.from_pretrained(
             "black-forest-labs/FLUX.1-schnell",
             torch_dtype=torch.bfloat16,
+            token=hf_token
         ).to("cuda")
 
 

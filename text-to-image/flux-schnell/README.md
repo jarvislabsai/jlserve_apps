@@ -8,6 +8,18 @@ FLUX.1-schnell is a fast distilled version of FLUX.1, optimized for 1-4 inferenc
 
 ## Usage
 
+**Note**: FLUX.1-schnell is a gated model. You need a Hugging Face token to access it.
+
+1. Get your token from [Hugging Face Settings](https://huggingface.co/settings/tokens)
+2. Accept the model license at [FLUX.1-schnell model page](https://huggingface.co/black-forest-labs/FLUX.1-schnell)
+3. Set the environment variable:
+
+```bash
+export HF_TOKEN=hf_xxxxx
+```
+
+4. Run the app:
+
 ```bash
 jlserve dev app.py
 ```
@@ -28,6 +40,8 @@ curl -X POST http://localhost:8000/generate \
 
 - CUDA-capable GPU (recommended)
 - ~18GB VRAM
+- Hugging Face account with access to FLUX.1-schnell model
+- `HF_TOKEN` environment variable set
 
 ## Model Info
 
